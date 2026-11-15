@@ -64,9 +64,9 @@ No battery query is known.
 
 | Byte | Field |
 |---|---|
-| 0 | effect: 1..19 animated effects, 20 = off, 0x80 = per-key colours |
+| 0 | effect: 1..19 animated effects, 20 = off (dongle only, see below), 0x80 = per-key colours |
 | 1-3 | R, G, B |
-| 8 | 1 = use the colour, 0 = rainbow |
+| 8 | dongle: 1 = use the colour, 0 = rainbow. USB cable: the other way round |
 | 9 | brightness 0..5 |
 | 10 | speed 0..5 |
 | 11 | direction 0..3 |
@@ -93,6 +93,9 @@ string IDs 200..219 in order, which gives effects 1..20.
 - Lighting effects, off (effect 20) and the lighting block, over the dongle.
 - Per-key colours over the dongle. The colours only appear when mode 0x80 is selected **again after** the
   table upload.
+- Over the USB cable (AMG65, macOS), byte 8 of the lighting block is the reverse of the dongle: 1 = rainbow,
+  0 = use the colour. Effect 20 does not turn the backlight off over the cable (it shows a fixed rainbow, one
+  colour per row); brightness 0 does, so Halcyon sends Static at brightness 0 for "Off" on wired.
 - Wired replies carry the OK flag in byte 3 (`04 18 00 01`), not byte 2.
 - Matrix and LCD uploads over USB.
 - The AMG65 has **one** LCD slot. The vendor app sets its screen count to 1; the byte sent in the `04 72`

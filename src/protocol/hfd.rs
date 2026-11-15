@@ -37,6 +37,24 @@ pub fn lighting_block(s: &LightingState) -> [u8; 16] {
     b
 }
 
+/// The "Off" effect in the device definition.
+pub const OFF_EFFECT: u8 = 20;
+const STATIC_EFFECT: u8 = 1;
+
+/// The lighting block as the USB cable needs it. Confirmed on hardware (AMG65, wired, macOS):
+/// - byte 8 is the other way round from the dongle: 1 = rainbow, 0 = use the colour;
+/// - effect 20 does not turn the backlight off, it shows a fixed rainbow by row, but brightness 0 does.
+pub fn wired_lighting_block(s: &LightingState) -> [u8; 16] {
+    let mut b = lighting_block(s);
+    b[8] = u8::from(s.rainbow);
+    if s.effect == OFF_EFFECT {
+        b[0] = STATIC_EFFECT;
+        b[8] = 0;
+        b[9] = 0;
+    }
+    b
+}
+
 // ---- Per-key colours (wired cmd 0x23 / dongle frames 0x14) ----
 // Entry for LED i sits at offset i*4 and is {i, R, G, B}. Lighting mode 0x80 shows the stored colours.
 pub const PERKEY_MODE: u8 = 0x80;
@@ -547,7 +565,7 @@ impl Transport for Wired {
     }
 
     fn set_lighting(&mut self, s: &LightingState) -> Result<bool> {
-        self.transaction(0x13, &[&lighting_block(s)], true)?;
+        self.transaction(0x13, &[&wired_lighting_block(s)], true)?;
         Ok(true)
     }
 
@@ -894,6 +912,24 @@ mod tests {
             })[8],
             0
         );
+    }
+
+    #[test]
+    fn wired_lighting_block_rainbow_and_off() {
+        let on = |rainbow| LightingState {
+            effect: 11,
+            rainbow,
+            ..Default::default()
+        };
+        assert_eq!(wired_lighting_block(&on(true))[8], 1);
+        assert_eq!(wired_lighting_block(&on(false))[8], 0);
+        let off = wired_lighting_block(&LightingState {
+            effect: OFF_EFFECT,
+            brightness: 5,
+            ..Default::default()
+        });
+        assert_eq!((off[0], off[8], off[9]), (STATIC_EFFECT, 0, 0));
+        assert_eq!(&off[14..16], &SIGNATURE);
     }
 
     #[test]
