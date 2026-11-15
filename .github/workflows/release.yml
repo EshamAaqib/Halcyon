@@ -9,14 +9,14 @@ jobs:
   windows:
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - uses: dtolnay/rust-toolchain@39008827e6b4319a349e9a42dfc90579dd25f1ca # stable
         with:
           toolchain: stable
       - run: cargo test --locked
       - run: cargo build --release --locked
       - run: Copy-Item target/release/halcyon.exe halcyon-windows-x64.exe
-      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: windows
           path: halcyon-windows-x64.exe
@@ -31,7 +31,7 @@ jobs:
           - target: x86_64-apple-darwin
             arch: intel
     steps:
-      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - uses: dtolnay/rust-toolchain@39008827e6b4319a349e9a42dfc90579dd25f1ca # stable
         with:
           toolchain: stable
@@ -43,7 +43,7 @@ jobs:
       - run: |
           cd target/${{ matrix.target }}/release/bundle/osx
           ditto -c -k --keepParent Halcyon.app "$GITHUB_WORKSPACE/halcyon-macos-${{ matrix.arch }}.zip"
-      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: macos-${{ matrix.arch }}
           path: halcyon-macos-${{ matrix.arch }}.zip
@@ -51,7 +51,7 @@ jobs:
   linux:
     runs-on: ubuntu-22.04   # the oldest supported runner, so the binary works on more distributions
     steps:
-      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - run: sudo apt-get update && sudo apt-get install -y libwebkit2gtk-4.1-dev libgtk-3-dev libudev-dev
       - uses: dtolnay/rust-toolchain@39008827e6b4319a349e9a42dfc90579dd25f1ca # stable
         with:
@@ -63,7 +63,7 @@ jobs:
           cp target/release/halcyon packaging/linux/70-halcyon.rules LICENSE DISCLAIMER.md halcyon-linux-x64/
           cp packaging/linux/README.txt halcyon-linux-x64/
           tar czf halcyon-linux-x64.tar.gz halcyon-linux-x64
-      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: linux
           path: halcyon-linux-x64.tar.gz
@@ -75,11 +75,11 @@ jobs:
     permissions:
       contents: write
     steps:
-      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
         with:
           merge-multiple: true
       - run: sha256sum halcyon-* > SHA256SUMS.txt   # lets people check a download wasn't tampered with
-      - uses: softprops/action-gh-release@3bb12739c298aeb8a4eeaf626c5b8d85266b0e65 # v2
+      - uses: softprops/action-gh-release@8a0cd651e5b2365bd640854a3fa5dfc70e4875f3 # v3.0.4
         with:
           files: |
             halcyon-windows-x64.exe
