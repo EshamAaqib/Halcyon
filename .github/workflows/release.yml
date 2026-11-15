@@ -24,6 +24,7 @@ jobs:
   macos:
     runs-on: macos-latest
     strategy:
+      fail-fast: false
       matrix:
         include:
           - target: aarch64-apple-darwin
@@ -39,7 +40,11 @@ jobs:
       - if: matrix.target == 'aarch64-apple-darwin'
         run: cargo test --locked
       - run: cargo install cargo-bundle --locked
-      - run: cargo bundle --release --locked --target ${{ matrix.target }}
+      - run: cargo build --release --locked --target ${{ matrix.target }}
+      # cargo-bundle has no --locked flag; it reuses the locked build above, and this fails if it touched Cargo.lock
+      - run: |
+          cargo bundle --release --target ${{ matrix.target }}
+          git diff --exit-code Cargo.lock
       - run: |
           cd target/${{ matrix.target }}/release/bundle/osx
           ditto -c -k --keepParent Halcyon.app "$GITHUB_WORKSPACE/halcyon-macos-${{ matrix.arch }}.zip"
