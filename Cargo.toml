@@ -1,6 +1,6 @@
 [package]
 name = "halcyon"
-version = "1.0.0"
+version = "1.0.1"
 edition = "2024"
 description = "Open-source control software for RGB keyboards: lighting, key remapping, macros and displays"
 license = "MIT"
