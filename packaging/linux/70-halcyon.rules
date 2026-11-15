@@ -1,0 +1,8 @@
+# Let the person signed in at the computer use supported keyboards' control interfaces without root.
+# Install:  sudo cp 70-halcyon.rules /etc/udev/rules.d/ && sudo udevadm control --reload && sudo udevadm trigger
+# Then unplug and replug the keyboard (or its dongle).
+
+# LEOBOG AMG65, USB cable
+KERNEL=="hidraw*", ATTRS{idVendor}=="0c45", ATTRS{idProduct}=="800a", TAG+="uaccess"
+# LEOBOG AMG65, 2.4 GHz dongle
+KERNEL=="hidraw*", ATTRS{idVendor}=="05ac", ATTRS{idProduct}=="024f", TAG+="uaccess"

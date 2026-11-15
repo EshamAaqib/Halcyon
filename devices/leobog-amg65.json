@@ -1,0 +1,1075 @@
+{
+ "id": "leobog-amg65",
+ "vendor": "LEOBOG",
+ "name": "AMG65",
+ "protocol": "hfd",
+ "notes": "65% tri-mode board with a volume knob, a 63x5 LED matrix and a 240x135 LCD. Effect names come from the vendor app. Matrix and LCD uploads work over USB only, as in the vendor app. \"originals\" lists files Halcyon can read from the user's own copy of the vendor software; they are never shipped.",
+ "connections": [
+  {
+   "type": "wired",
+   "vid": "0x0C45",
+   "pid": "0x800A",
+   "usage_page": "0xFF68",
+   "usage": "0x61",
+   "bulk": {
+    "usage_page": "0xFF67",
+    "usage": "0x61"
+   }
+  },
+  {
+   "type": "dongle",
+   "vid": "0x05AC",
+   "pid": "0x024F",
+   "usage_page": "0xFF60",
+   "usage": "0x61",
+   "product": "AMG65 Dongle"
+  }
+ ],
+ "features": {
+  "lighting": {
+   "connections": [
+    "wired",
+    "dongle"
+   ]
+  },
+  "perkey": {
+   "connections": [
+    "wired",
+    "dongle"
+   ]
+  },
+  "keymap": {
+   "connections": [
+    "wired",
+    "dongle"
+   ],
+   "keys": 127
+  },
+  "macros": {
+   "connections": [
+    "wired",
+    "dongle"
+   ],
+   "slots": 100,
+   "capacity_events": 650
+  },
+  "settings": {
+   "connections": [
+    "wired",
+    "dongle"
+   ],
+   "options": [
+    "game_mode",
+    "disable_win",
+    "disable_alt_tab",
+    "disable_alt_f4",
+    "fn_switch",
+    "sleep"
+   ]
+  },
+  "clock": {
+   "connections": [
+    "wired",
+    "dongle"
+   ]
+  },
+  "matrix": {
+   "connections": [
+    "wired"
+   ],
+   "width": 63,
+   "height": 5,
+   "max_frames": 260
+  },
+  "lcd": {
+   "connections": [
+    "wired"
+   ],
+   "width": 240,
+   "height": 135,
+   "max_frames": 130,
+   "slots": 1
+  }
+ },
+ "originals": {
+  "boot": {
+   "file": "ledlayer_v2.data",
+   "layer": 1,
+   "pixels": 315,
+   "path": "db/ledlayer_v2.data"
+  },
+  "screen": {
+   "file": "screen.gif",
+   "slot": 1,
+   "path": "gif/LEOBOG AMG65/0.gif"
+  },
+  "product": {
+   "file": "product.png",
+   "path": "skins/theme1/keyboard/home_keyboard.png"
+  },
+  "library": {
+   "file": "ledlayer_v2.data",
+   "sizes": [
+    [
+     63,
+     5
+    ],
+    [
+     70,
+     7
+    ]
+   ],
+   "names": {
+    "1": "Boot logo",
+    "2": "Christmas",
+    "3": "Aurora",
+    "4": "Game",
+    "5": "Rainbow",
+    "6": "Tetris"
+   },
+   "path": "db/ledlayer_v2.data"
+  }
+ },
+ "lighting": {
+  "brightness_max": 5,
+  "speed_max": 5,
+  "directions": [
+   {
+    "value": 0,
+    "name": "Right"
+   },
+   {
+    "value": 1,
+    "name": "Left"
+   },
+   {
+    "value": 2,
+    "name": "Up"
+   },
+   {
+    "value": 3,
+    "name": "Down"
+   }
+  ],
+  "effects": [
+   {
+    "id": 1,
+    "name": "Static",
+    "group": "steady",
+    "controls": [
+     "color",
+     "brightness"
+    ],
+    "preview": "static",
+    "description": "One colour, always on"
+   },
+   {
+    "id": 7,
+    "name": "Breathing",
+    "group": "steady",
+    "controls": [
+     "color",
+     "rainbow",
+     "brightness",
+     "speed"
+    ],
+    "preview": "animated",
+    "description": "Fades in and out"
+   },
+   {
+    "id": 8,
+    "name": "Spectrum",
+    "group": "steady",
+    "controls": [
+     "brightness",
+     "speed"
+    ],
+    "preview": "spectrum",
+    "description": "Whole board cycles through colours"
+   },
+   {
+    "id": 6,
+    "name": "Colourful",
+    "group": "steady",
+    "controls": [
+     "brightness",
+     "speed"
+    ],
+    "preview": "rainbow",
+    "description": "Every key a different colour"
+   },
+   {
+    "id": 4,
+    "name": "Starlight",
+    "group": "steady",
+    "controls": [
+     "color",
+     "rainbow",
+     "brightness",
+     "speed"
+    ],
+    "preview": "twinkle",
+    "description": "Random keys twinkle"
+   },
+   {
+    "id": 5,
+    "name": "Snowfall",
+    "group": "steady",
+    "controls": [
+     "color",
+     "rainbow",
+     "brightness",
+     "speed"
+    ],
+    "preview": "twinkle",
+    "description": "Light drifts down the board"
+   },
+   {
+    "id": 9,
+    "name": "Fountain",
+    "group": "moving",
+    "controls": [
+     "color",
+     "rainbow",
+     "brightness",
+     "speed"
+    ],
+    "preview": "outward",
+    "description": "Waves spread out from the centre"
+   },
+   {
+    "id": 17,
+    "name": "Pulse",
+    "group": "moving",
+    "controls": [
+     "color",
+     "rainbow",
+     "brightness",
+     "speed"
+    ],
+    "preview": "animated",
+    "description": "Layered pulses"
+   },
+   {
+    "id": 19,
+    "name": "Shuttle",
+    "group": "moving",
+    "controls": [
+     "color",
+     "rainbow",
+     "brightness",
+     "speed"
+    ],
+    "preview": "shuttle",
+    "description": "A band of light runs back and forth"
+   },
+   {
+    "id": 10,
+    "name": "Crossing",
+    "group": "moving",
+    "controls": [
+     "color",
+     "rainbow",
+     "brightness",
+     "speed",
+     "direction"
+    ],
+    "preview": "directional",
+    "description": "Colours sweep across"
+   },
+   {
+    "id": 11,
+    "name": "Wave",
+    "group": "moving",
+    "controls": [
+     "color",
+     "rainbow",
+     "brightness",
+     "speed",
+     "direction"
+    ],
+    "preview": "directional",
+    "description": "A wave rolls across"
+   },
+   {
+    "id": 12,
+    "name": "Rotate",
+    "group": "moving",
+    "controls": [
+     "color",
+     "rainbow",
+     "brightness",
+     "speed",
+     "direction"
+    ],
+    "preview": "directional",
+    "description": "Light circles around"
+   },
+   {
+    "id": 16,
+    "name": "Flow",
+    "group": "moving",
+    "controls": [
+     "color",
+     "rainbow",
+     "brightness",
+     "speed",
+     "direction"
+    ],
+    "preview": "directional",
+    "description": "Continuous stream of light"
+   },
+   {
+    "id": 18,
+    "name": "Rain",
+    "group": "moving",
+    "controls": [
+     "color",
+     "rainbow",
+     "brightness",
+     "speed",
+     "direction"
+    ],
+    "preview": "directional",
+    "description": "Slanted streaks, like rain"
+   },
+   {
+    "id": 2,
+    "name": "Light on press",
+    "group": "typing",
+    "controls": [
+     "color",
+     "rainbow",
+     "brightness",
+     "speed"
+    ],
+    "preview": "reactive-key",
+    "description": "Dark until you press a key"
+   },
+   {
+    "id": 3,
+    "name": "Dark on press",
+    "group": "typing",
+    "controls": [
+     "color",
+     "rainbow",
+     "brightness",
+     "speed"
+    ],
+    "preview": "reactive-off",
+    "description": "Keys go dark as you press them"
+   },
+   {
+    "id": 13,
+    "name": "Explode",
+    "group": "typing",
+    "controls": [
+     "color",
+     "rainbow",
+     "brightness",
+     "speed"
+    ],
+    "preview": "reactive",
+    "description": "Light bursts from the key you press"
+   },
+   {
+    "id": 14,
+    "name": "Launch",
+    "group": "typing",
+    "controls": [
+     "color",
+     "rainbow",
+     "brightness",
+     "speed"
+    ],
+    "preview": "reactive",
+    "description": "Light shoots out from the key you press"
+   },
+   {
+    "id": 15,
+    "name": "Ripple",
+    "group": "typing",
+    "controls": [
+     "color",
+     "rainbow",
+     "brightness",
+     "speed"
+    ],
+    "preview": "reactive",
+    "description": "Rings spread from the key you press"
+   },
+   {
+    "id": 20,
+    "name": "Off",
+    "group": "off",
+    "controls": [],
+    "preview": "off",
+    "description": "Backlight off"
+   },
+   {
+    "id": 128,
+    "name": "Per-key colours",
+    "group": "custom",
+    "controls": [
+     "color",
+     "paint",
+     "brightness"
+    ],
+    "preview": "perkey",
+    "description": "Paint each key its own colour",
+    "perkey": true
+   }
+  ],
+  "groups": [
+   {
+    "id": "steady",
+    "name": "Ambient"
+   },
+   {
+    "id": "moving",
+    "name": "Moving"
+   },
+   {
+    "id": "typing",
+    "name": "Reacts to typing"
+   },
+   {
+    "id": "custom",
+    "name": "Your design"
+   },
+   {
+    "id": "off",
+    "name": "Off"
+   }
+  ]
+ },
+ "layout": {
+  "width": 16.0,
+  "height": 5.0,
+  "keys": [
+   {
+    "label": "Esc",
+    "x": 0.0,
+    "y": 0.0,
+    "w": 1.0,
+    "code": 41,
+    "key_index": 0,
+    "led": 0
+   },
+   {
+    "label": "1",
+    "x": 1.0,
+    "y": 0.0,
+    "w": 1.0,
+    "code": 30,
+    "key_index": 17,
+    "led": 17
+   },
+   {
+    "label": "2",
+    "x": 2.0,
+    "y": 0.0,
+    "w": 1.0,
+    "code": 31,
+    "key_index": 18,
+    "led": 18
+   },
+   {
+    "label": "3",
+    "x": 3.0,
+    "y": 0.0,
+    "w": 1.0,
+    "code": 32,
+    "key_index": 19,
+    "led": 19
+   },
+   {
+    "label": "4",
+    "x": 4.0,
+    "y": 0.0,
+    "w": 1.0,
+    "code": 33,
+    "key_index": 20,
+    "led": 20
+   },
+   {
+    "label": "5",
+    "x": 5.0,
+    "y": 0.0,
+    "w": 1.0,
+    "code": 34,
+    "key_index": 21,
+    "led": 21
+   },
+   {
+    "label": "6",
+    "x": 6.0,
+    "y": 0.0,
+    "w": 1.0,
+    "code": 35,
+    "key_index": 22,
+    "led": 22
+   },
+   {
+    "label": "7",
+    "x": 7.0,
+    "y": 0.0,
+    "w": 1.0,
+    "code": 36,
+    "key_index": 23,
+    "led": 23
+   },
+   {
+    "label": "8",
+    "x": 8.0,
+    "y": 0.0,
+    "w": 1.0,
+    "code": 37,
+    "key_index": 24,
+    "led": 24
+   },
+   {
+    "label": "9",
+    "x": 9.0,
+    "y": 0.0,
+    "w": 1.0,
+    "code": 38,
+    "key_index": 25,
+    "led": 25
+   },
+   {
+    "label": "0",
+    "x": 10.0,
+    "y": 0.0,
+    "w": 1.0,
+    "code": 39,
+    "key_index": 26,
+    "led": 26
+   },
+   {
+    "label": "-",
+    "x": 11.0,
+    "y": 0.0,
+    "w": 1.0,
+    "code": 45,
+    "key_index": 27,
+    "led": 27
+   },
+   {
+    "label": "=",
+    "x": 12.0,
+    "y": 0.0,
+    "w": 1.0,
+    "code": 46,
+    "key_index": 28,
+    "led": 28
+   },
+   {
+    "label": "Backspace",
+    "x": 13.0,
+    "y": 0.0,
+    "w": 2.0,
+    "code": 42,
+    "key_index": 92,
+    "led": 92
+   },
+   {
+    "label": "Home",
+    "x": 15.0,
+    "y": 0.0,
+    "w": 1.0,
+    "code": 74,
+    "key_index": 104,
+    "led": 104
+   },
+   {
+    "label": "Vol+",
+    "x": 17.75,
+    "y": -2.0,
+    "w": 1.0,
+    "code": 233,
+    "key_index": 13,
+    "led": 13,
+    "extra": true
+   },
+   {
+    "label": "Vol-",
+    "x": 17.75,
+    "y": -1.25,
+    "w": 1.0,
+    "code": 234,
+    "key_index": 14,
+    "led": 14,
+    "extra": true
+   },
+   {
+    "label": "Tab",
+    "x": 0.0,
+    "y": 1.0,
+    "w": 1.5,
+    "code": 43,
+    "key_index": 32,
+    "led": 32
+   },
+   {
+    "label": "Q",
+    "x": 1.5,
+    "y": 1.0,
+    "w": 1.0,
+    "code": 20,
+    "key_index": 33,
+    "led": 33
+   },
+   {
+    "label": "W",
+    "x": 2.5,
+    "y": 1.0,
+    "w": 1.0,
+    "code": 26,
+    "key_index": 34,
+    "led": 34
+   },
+   {
+    "label": "E",
+    "x": 3.5,
+    "y": 1.0,
+    "w": 1.0,
+    "code": 8,
+    "key_index": 35,
+    "led": 35
+   },
+   {
+    "label": "R",
+    "x": 4.5,
+    "y": 1.0,
+    "w": 1.0,
+    "code": 21,
+    "key_index": 36,
+    "led": 36
+   },
+   {
+    "label": "T",
+    "x": 5.5,
+    "y": 1.0,
+    "w": 1.0,
+    "code": 23,
+    "key_index": 37,
+    "led": 37
+   },
+   {
+    "label": "Y",
+    "x": 6.5,
+    "y": 1.0,
+    "w": 1.0,
+    "code": 28,
+    "key_index": 38,
+    "led": 38
+   },
+   {
+    "label": "U",
+    "x": 7.5,
+    "y": 1.0,
+    "w": 1.0,
+    "code": 24,
+    "key_index": 39,
+    "led": 39
+   },
+   {
+    "label": "I",
+    "x": 8.5,
+    "y": 1.0,
+    "w": 1.0,
+    "code": 12,
+    "key_index": 40,
+    "led": 40
+   },
+   {
+    "label": "O",
+    "x": 9.5,
+    "y": 1.0,
+    "w": 1.0,
+    "code": 18,
+    "key_index": 41,
+    "led": 41
+   },
+   {
+    "label": "P",
+    "x": 10.5,
+    "y": 1.0,
+    "w": 1.0,
+    "code": 19,
+    "key_index": 42,
+    "led": 42
+   },
+   {
+    "label": "[",
+    "x": 11.5,
+    "y": 1.0,
+    "w": 1.0,
+    "code": 47,
+    "key_index": 43,
+    "led": 43
+   },
+   {
+    "label": "}",
+    "x": 12.5,
+    "y": 1.0,
+    "w": 1.0,
+    "code": 48,
+    "key_index": 44,
+    "led": 44
+   },
+   {
+    "label": "\\",
+    "x": 13.5,
+    "y": 1.0,
+    "w": 1.5,
+    "code": 49,
+    "key_index": 60,
+    "led": 60
+   },
+   {
+    "label": "Del",
+    "x": 15.0,
+    "y": 1.0,
+    "w": 1.0,
+    "code": 76,
+    "key_index": 106,
+    "led": 106
+   },
+   {
+    "label": "Caps",
+    "x": 0.0,
+    "y": 2.0,
+    "w": 1.75,
+    "code": 57,
+    "key_index": 48,
+    "led": 48
+   },
+   {
+    "label": "A",
+    "x": 1.75,
+    "y": 2.0,
+    "w": 1.0,
+    "code": 4,
+    "key_index": 49,
+    "led": 49
+   },
+   {
+    "label": "S",
+    "x": 2.75,
+    "y": 2.0,
+    "w": 1.0,
+    "code": 22,
+    "key_index": 50,
+    "led": 50
+   },
+   {
+    "label": "D",
+    "x": 3.75,
+    "y": 2.0,
+    "w": 1.0,
+    "code": 7,
+    "key_index": 51,
+    "led": 51
+   },
+   {
+    "label": "F",
+    "x": 4.75,
+    "y": 2.0,
+    "w": 1.0,
+    "code": 9,
+    "key_index": 52,
+    "led": 52
+   },
+   {
+    "label": "G",
+    "x": 5.75,
+    "y": 2.0,
+    "w": 1.0,
+    "code": 10,
+    "key_index": 53,
+    "led": 53
+   },
+   {
+    "label": "H",
+    "x": 6.75,
+    "y": 2.0,
+    "w": 1.0,
+    "code": 11,
+    "key_index": 54,
+    "led": 54
+   },
+   {
+    "label": "J",
+    "x": 7.75,
+    "y": 2.0,
+    "w": 1.0,
+    "code": 13,
+    "key_index": 55,
+    "led": 55
+   },
+   {
+    "label": "K",
+    "x": 8.75,
+    "y": 2.0,
+    "w": 1.0,
+    "code": 14,
+    "key_index": 56,
+    "led": 56
+   },
+   {
+    "label": "L",
+    "x": 9.75,
+    "y": 2.0,
+    "w": 1.0,
+    "code": 15,
+    "key_index": 57,
+    "led": 57
+   },
+   {
+    "label": ";",
+    "x": 10.75,
+    "y": 2.0,
+    "w": 1.0,
+    "code": 51,
+    "key_index": 58,
+    "led": 58
+   },
+   {
+    "label": "'",
+    "x": 11.75,
+    "y": 2.0,
+    "w": 1.0,
+    "code": 52,
+    "key_index": 59,
+    "led": 59
+   },
+   {
+    "label": "Enter",
+    "x": 12.75,
+    "y": 2.0,
+    "w": 2.25,
+    "code": 40,
+    "key_index": 76,
+    "led": 76
+   },
+   {
+    "label": "PgUp",
+    "x": 15.0,
+    "y": 2.0,
+    "w": 1.0,
+    "code": 75,
+    "key_index": 105,
+    "led": 105
+   },
+   {
+    "label": "Shift",
+    "x": 0.0,
+    "y": 3.0,
+    "w": 2.25,
+    "code": 225,
+    "key_index": 64,
+    "led": 64
+   },
+   {
+    "label": "Z",
+    "x": 2.25,
+    "y": 3.0,
+    "w": 1.0,
+    "code": 29,
+    "key_index": 65,
+    "led": 65
+   },
+   {
+    "label": "X",
+    "x": 3.25,
+    "y": 3.0,
+    "w": 1.0,
+    "code": 27,
+    "key_index": 66,
+    "led": 66
+   },
+   {
+    "label": "C",
+    "x": 4.25,
+    "y": 3.0,
+    "w": 1.0,
+    "code": 6,
+    "key_index": 67,
+    "led": 67
+   },
+   {
+    "label": "V",
+    "x": 5.25,
+    "y": 3.0,
+    "w": 1.0,
+    "code": 25,
+    "key_index": 68,
+    "led": 68
+   },
+   {
+    "label": "B",
+    "x": 6.25,
+    "y": 3.0,
+    "w": 1.0,
+    "code": 5,
+    "key_index": 69,
+    "led": 69
+   },
+   {
+    "label": "N",
+    "x": 7.25,
+    "y": 3.0,
+    "w": 1.0,
+    "code": 17,
+    "key_index": 70,
+    "led": 70
+   },
+   {
+    "label": "M",
+    "x": 8.25,
+    "y": 3.0,
+    "w": 1.0,
+    "code": 16,
+    "key_index": 71,
+    "led": 71
+   },
+   {
+    "label": "<",
+    "x": 9.25,
+    "y": 3.0,
+    "w": 1.0,
+    "code": 54,
+    "key_index": 72,
+    "led": 72
+   },
+   {
+    "label": ">",
+    "x": 10.25,
+    "y": 3.0,
+    "w": 1.0,
+    "code": 55,
+    "key_index": 73,
+    "led": 73
+   },
+   {
+    "label": "?",
+    "x": 11.25,
+    "y": 3.0,
+    "w": 1.0,
+    "code": 56,
+    "key_index": 74,
+    "led": 74
+   },
+   {
+    "label": "Shift",
+    "x": 12.25,
+    "y": 3.0,
+    "w": 1.75,
+    "code": 229,
+    "key_index": 75,
+    "led": 75
+   },
+   {
+    "label": "↑",
+    "x": 14.0,
+    "y": 3.0,
+    "w": 1.0,
+    "code": 82,
+    "key_index": 90,
+    "led": 90
+   },
+   {
+    "label": "PgDn",
+    "x": 15.0,
+    "y": 3.0,
+    "w": 1.0,
+    "code": 78,
+    "key_index": 108,
+    "led": 108
+   },
+   {
+    "label": "Ctrl",
+    "x": 0.0,
+    "y": 4.0,
+    "w": 1.25,
+    "code": 224,
+    "key_index": 80,
+    "led": 80
+   },
+   {
+    "label": "Win",
+    "x": 1.25,
+    "y": 4.0,
+    "w": 1.25,
+    "code": 227,
+    "key_index": 81,
+    "led": 81
+   },
+   {
+    "label": "Alt",
+    "x": 2.5,
+    "y": 4.0,
+    "w": 1.25,
+    "code": 226,
+    "key_index": 82,
+    "led": 82
+   },
+   {
+    "label": "Space",
+    "x": 3.75,
+    "y": 4.0,
+    "w": 6.25,
+    "code": 44,
+    "key_index": 83,
+    "led": 83
+   },
+   {
+    "label": "Fn",
+    "x": 10.0,
+    "y": 4.0,
+    "w": 1.25,
+    "code": 175,
+    "key_index": 85,
+    "led": 85
+   },
+   {
+    "label": "Ctrl",
+    "x": 11.25,
+    "y": 4.0,
+    "w": 1.25,
+    "code": 228,
+    "key_index": 87,
+    "led": 87
+   },
+   {
+    "label": "←",
+    "x": 13.0,
+    "y": 4.0,
+    "w": 1.0,
+    "code": 80,
+    "key_index": 88,
+    "led": 88
+   },
+   {
+    "label": "↓",
+    "x": 14.0,
+    "y": 4.0,
+    "w": 1.0,
+    "code": 81,
+    "key_index": 89,
+    "led": 89
+   },
+   {
+    "label": "→",
+    "x": 15.0,
+    "y": 4.0,
+    "w": 1.0,
+    "code": 79,
+    "key_index": 91,
+    "led": 91
+   }
+  ]
+ }
+}

@@ -1,0 +1,89 @@
+name: Release
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch:   # run by hand from the Actions tab to get test builds without tagging
+permissions:
+  contents: read   # only the publish job below may write to the repository
+jobs:
+  windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: dtolnay/rust-toolchain@39008827e6b4319a349e9a42dfc90579dd25f1ca # stable
+        with:
+          toolchain: stable
+      - run: cargo test --locked
+      - run: cargo build --release --locked
+      - run: Copy-Item target/release/halcyon.exe halcyon-windows-x64.exe
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: windows
+          path: halcyon-windows-x64.exe
+
+  macos:
+    runs-on: macos-latest
+    strategy:
+      matrix:
+        include:
+          - target: aarch64-apple-darwin
+            arch: apple-silicon
+          - target: x86_64-apple-darwin
+            arch: intel
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: dtolnay/rust-toolchain@39008827e6b4319a349e9a42dfc90579dd25f1ca # stable
+        with:
+          toolchain: stable
+          targets: ${{ matrix.target }}
+      - if: matrix.target == 'aarch64-apple-darwin'
+        run: cargo test --locked
+      - run: cargo install cargo-bundle --locked
+      - run: cargo bundle --release --locked --target ${{ matrix.target }}
+      - run: |
+          cd target/${{ matrix.target }}/release/bundle/osx
+          ditto -c -k --keepParent Halcyon.app "$GITHUB_WORKSPACE/halcyon-macos-${{ matrix.arch }}.zip"
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: macos-${{ matrix.arch }}
+          path: halcyon-macos-${{ matrix.arch }}.zip
+
+  linux:
+    runs-on: ubuntu-22.04   # the oldest supported runner, so the binary works on more distributions
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - run: sudo apt-get update && sudo apt-get install -y libwebkit2gtk-4.1-dev libgtk-3-dev libudev-dev
+      - uses: dtolnay/rust-toolchain@39008827e6b4319a349e9a42dfc90579dd25f1ca # stable
+        with:
+          toolchain: stable
+      - run: cargo test --locked
+      - run: cargo build --release --locked
+      - run: |
+          mkdir -p halcyon-linux-x64
+          cp target/release/halcyon packaging/linux/70-halcyon.rules LICENSE DISCLAIMER.md halcyon-linux-x64/
+          cp packaging/linux/README.txt halcyon-linux-x64/
+          tar czf halcyon-linux-x64.tar.gz halcyon-linux-x64
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: linux
+          path: halcyon-linux-x64.tar.gz
+
+  publish:
+    if: startsWith(github.ref, 'refs/tags/')
+    needs: [windows, macos, linux]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          merge-multiple: true
+      - run: sha256sum halcyon-* > SHA256SUMS.txt   # lets people check a download wasn't tampered with
+      - uses: softprops/action-gh-release@3bb12739c298aeb8a4eeaf626c5b8d85266b0e65 # v2
+        with:
+          files: |
+            halcyon-windows-x64.exe
+            halcyon-macos-apple-silicon.zip
+            halcyon-macos-intel.zip
+            halcyon-linux-x64.tar.gz
+            SHA256SUMS.txt

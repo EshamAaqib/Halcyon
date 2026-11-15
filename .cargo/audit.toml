@@ -1,0 +1,10 @@
+# Advisories reviewed and accepted. Anything not listed here fails `cargo audit --deny warnings` in CI.
+[advisories]
+ignore = [
+    # proc-macro-error is unmaintained. Compile-time only (a macro helper pulled in by the Linux GTK bindings
+    # that tao/wry use); it never runs inside Halcyon. Goes away when gtk-rs drops it.
+    "RUSTSEC-2024-0370",
+    # glib 0.18: unsound Iterator impls on glib::VariantStrIter. Linux-only, via tao/wry's GTK bindings; Halcyon
+    # never uses VariantStrIter. Fixed in glib 0.20, which arrives when tao/wry upgrade gtk-rs.
+    "RUSTSEC-2024-0429",
+]

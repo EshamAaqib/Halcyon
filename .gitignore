@@ -1,0 +1,7 @@
+/target/
+.DS_Store
+Thumbs.db
+.taste-skill/
+
+# Vendor files are each user's own copy and are never committed (see docs/ORIGINALS.md)
+vendor/

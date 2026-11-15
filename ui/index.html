@@ -1,0 +1,381 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<title>Halcyon</title>
+<link rel="icon" href="logo.svg">
+<link rel="stylesheet" href="app.css">
+</head>
+<body>
+<div class="shell">
+  <aside class="sidebar">
+    <div class="wordmark">
+      <!-- Mark: the H logo (assets/logo.svg); its bridge key is lit in the keyboard's current colour -->
+      <svg width="26" height="26" viewBox="0 0 512 512" aria-hidden="true">
+        <rect width="512" height="512" rx="116" fill="#1a1a1a"/>
+        <rect x="136" y="128" width="68" height="256" rx="34" fill="#fff"/>
+        <rect x="308" y="128" width="68" height="256" rx="34" fill="#fff"/>
+        <rect x="218" y="218" width="76" height="76" rx="20" fill="rgb(var(--light))"/>
+      </svg>
+      Halcyon
+    </div>
+    <div class="group">Keyboard</div>
+    <nav class="nav" id="nav">
+      <a href="#lighting" data-view="lighting" title="Lighting">
+        <svg aria-hidden="true" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="3"/><path d="M8 1v2M8 13v2M1 8h2M13 8h2M3 3l1.4 1.4M11.6 11.6 13 13M3 13l1.4-1.4M11.6 4.4 13 3"/></svg>
+        <span>Lighting</span></a>
+      <a href="#keys" data-view="keys" title="Keys">
+        <svg aria-hidden="true" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1.5" y="4" width="13" height="8" rx="2"/><path d="M4 7h1M7 7h2M11 7h1M5 9.5h6"/></svg>
+        <span>Keys</span></a>
+      <a href="#macros" data-view="macros" title="Macros">
+        <svg aria-hidden="true" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 4h10M3 8h7M3 12h4"/><path d="m11 10 3 2-3 2z" fill="currentColor"/></svg>
+        <span>Macros</span></a>
+      <a href="#display" data-view="display" title="Display">
+        <svg aria-hidden="true" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="12" height="9" rx="1.5"/><path d="M6 14h4"/></svg>
+        <span>Display</span></a>
+      <a href="#settings" data-view="settings" title="Settings">
+        <svg aria-hidden="true" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 4h7M12 4h2M2 12h2M7 12h7"/><circle cx="10.5" cy="4" r="1.5"/><circle cx="5.5" cy="12" r="1.5"/></svg>
+        <span>Settings</span></a>
+    </nav>
+    <div class="group">Library</div>
+    <nav class="nav">
+      <a href="#devices" data-view="devices" title="Keyboards">
+        <svg aria-hidden="true" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="5" height="5" rx="1"/><rect x="9" y="2" width="5" height="5" rx="1"/><rect x="2" y="9" width="5" height="5" rx="1"/><path d="M11.5 9v5M9 11.5h5"/></svg>
+        <span>Keyboards</span></a>
+    </nav>
+  </aside>
+
+  <div class="main">
+    <header class="topbar">
+      <div class="titlebox">
+        <h1 id="viewTitle">Lighting</h1>
+        <div class="status"><i class="dot" id="dot"></i><span id="statusText">Looking for keyboards…</span><span class="batt hidden" id="batt"><span class="battery"><i id="battBar"></i></span><span id="battText"></span></span></div>
+      </div>
+      <div class="switcher">
+        <button id="switchBtn" aria-haspopup="true" aria-expanded="false">
+          <img id="devThumb" class="switch-thumb hidden" alt="">
+          <span class="who"><b id="devName">No keyboard</b><span id="devVendor">Choose a device</span></span>
+          <svg aria-hidden="true" width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="m3 4.5 3 3 3-3"/></svg>
+        </button>
+        <div class="menu" id="menu" role="menu"></div>
+      </div>
+    </header>
+
+    <!-- Lighting -->
+    <main class="canvas" data-page="lighting">
+     <div class="lighting">
+      <div class="col">
+      <section class="card stage">
+        <div class="board"><div class="kb" id="kb" role="group" aria-label="Keyboard preview"></div></div>
+        <div class="stage-foot">
+          <div class="now"><b id="nowName">—</b> <span id="nowDesc"></span></div>
+          <div class="foot-actions"><span class="stamp" id="stamp"></span><button class="btn" id="power">Turn backlight off</button></div>
+        </div>
+      </section>
+        <section class="card">
+          <div class="card-head"><h2>Effects</h2><p>Typing effects stay dark until you press keys</p></div>
+          <div id="effects"></div>
+        </section>
+      </div>
+        <section class="card rail">
+          <div class="card-head"><h2>Tune</h2><p id="tuneFor"></p></div>
+          <div id="tune">
+            <div class="field" data-control="color">
+              <div class="field-head"><span>Colour</span></div>
+              <div class="swatches" id="swatches">
+                <label class="custom" id="custom" title="Any colour">
+                  <svg aria-hidden="true" width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M7 2v10M2 7h10"/></svg>
+                  <input type="color" id="picker" aria-label="Custom colour">
+                </label>
+                <span class="hex" id="hex"></span>
+              </div>
+            </div>
+            <div class="field" data-control="paint">
+              <div class="field-head"><span>Paint</span></div>
+              <p class="hint" style="margin:0 0 12px">Click keys on the keyboard to paint them in the colour above.</p>
+              <div class="actions" style="margin:0"><button class="btn" id="paintFill">Fill all keys</button><button class="btn" id="paintClear">Clear</button></div>
+            </div>
+            <div class="field" data-control="rainbow">
+              <div class="switch-row">
+                <div><div style="font-weight:500">Rainbow</div><p class="hint">Cycle through every colour instead of one.</p></div>
+                <label class="toggle"><input type="checkbox" id="rainbow" aria-label="Rainbow"><span></span></label>
+              </div>
+            </div>
+            <div class="field" data-control="brightness">
+              <div class="field-head"><span>Brightness</span><output id="brightnessOut"></output></div>
+              <div class="seg" id="brightness"></div>
+            </div>
+            <div class="field" data-control="speed">
+              <div class="field-head"><span>Speed</span><output id="speedOut"></output></div>
+              <div class="seg" id="speed"></div>
+            </div>
+            <div class="field" data-control="direction">
+              <div class="field-head"><span>Direction</span><output id="directionOut"></output></div>
+              <div class="seg" id="direction"></div>
+            </div>
+            <div class="locked" id="locked"></div>
+          </div>
+        </section>
+     </div>
+    </main>
+
+    <!-- Keys -->
+    <main class="canvas hidden" data-page="keys">
+     <div class="lighting">
+      <div class="col">
+        <section class="card stage">
+          <div class="board"><div class="kb remap" id="kbKeys" role="group" aria-label="Choose a key to change"></div></div>
+          <div class="stage-foot">
+            <div class="now"><b id="keysSummary">Click a key to change what it does</b></div>
+            <div class="foot-actions"><span class="stamp" id="keysStamp"></span>
+              <button class="btn" id="keysReset">Reset all keys</button>
+              <button class="btn primary" id="keysSave" disabled>Save to keyboard</button></div>
+          </div>
+        </section>
+        <section class="card">
+          <div class="card-head"><h2>Changed keys</h2><p id="keysCount"></p></div>
+          <ul class="facts" id="keysList" style="margin:0"></ul>
+        </section>
+      </div>
+      <section class="card rail" id="keyPanel">
+        <div class="card-head"><h2 id="keyTitle">No key selected</h2><p id="keyNow"></p></div>
+        <div id="keyEditor" class="hidden">
+          <div class="seg tabs" id="keyTabs"></div>
+          <div id="keyTabBody" style="margin-top:16px"></div>
+        </div>
+        <div id="keyHint">
+          <p class="hint" style="margin-top:0">Pick a key on the keyboard. It can become any other key, a shortcut, a media control, a mouse button or a macro.</p>
+          <ul class="legend">
+            <li><i class="sw-changed"></i>Changed and saved</li>
+            <li><i class="sw-pending"></i>Changed, not saved yet</li>
+            <li><i class="sw-selected"></i>Selected</li>
+          </ul>
+          <div class="lbl">Ideas</div>
+          <ul class="ideas">
+            <li>Caps Lock as Esc or Ctrl</li>
+            <li>A key that locks your PC</li>
+            <li>Volume and play/pause on spare keys</li>
+            <li>A key that types your email</li>
+          </ul>
+        </div>
+      </section>
+     </div>
+    </main>
+
+    <!-- Macros -->
+    <main class="canvas hidden" data-page="macros">
+     <div class="lighting macros">
+      <section class="card">
+        <div class="card-head"><h2>Your macros</h2><p id="macroCap"></p></div>
+        <div class="meter"><i id="macroMeter"></i></div>
+        <div id="macroList" class="mlist"></div>
+        <div class="actions"><button class="btn" id="macroNew">New macro</button></div>
+      </section>
+      <section class="card" id="macroEditor">
+        <div class="card-head"><h2>Editor</h2><p id="macroEdHint">Choose or create a macro</p></div>
+        <div id="macroEdBody" class="hidden">
+          <label class="lbl" for="macroName">Name</label>
+          <input class="input" id="macroName" maxlength="40" autocomplete="off">
+          <div class="rec-row">
+            <button class="btn primary" id="macroRec">Record</button>
+            <label class="check"><input type="checkbox" id="macroDelays" checked> Keep my timing</label>
+            <span class="stamp" id="macroRecState"></span>
+          </div>
+          <ol class="events" id="macroEvents"></ol>
+          <div class="actions">
+            <button class="btn" id="macroAddDelay">Add delay</button>
+            <button class="btn" id="macroDelete">Delete macro</button>
+            <span style="flex:1"></span>
+            <span class="stamp" id="macroStamp"></span>
+            <button class="btn primary" id="macroSave">Save to keyboard</button>
+          </div>
+          <p class="hint">After saving, give it a key in <a href="#keys">Keys</a>, then choose Macro.</p>
+        </div>
+      </section>
+     </div>
+    </main>
+
+    <!-- Display -->
+    <main class="canvas hidden" data-page="display">
+      <section class="card stage">
+        <div class="board"><div class="kb" id="kbDisplay" aria-hidden="true"></div></div>
+        <div class="stage-foot">
+          <div class="now"><b>Preview</b> <span id="dispNow"></span></div>
+          <div class="foot-actions"><span class="stamp" id="clockStamp"></span><button class="btn" id="clockSync">Sync clock</button></div>
+        </div>
+      </section>
+      <p class="hint hidden" id="noDisplay" style="margin:0">This keyboard has no LED matrix or screen.</p>
+      <div class="notice hidden" id="cableNotice">Sending to the matrix and screen needs the USB cable, as in the official app. Plug it in and the Send buttons switch on.</div>
+      <div class="displays">
+        <section class="card" id="mxCard">
+          <div class="card-head"><h2>LED matrix</h2><p id="mxSize"></p></div>
+          <div class="seg tabs" id="mxTabs"></div>
+
+          <div class="mx-body" data-tab="image">
+            <div class="drop" data-drop="matrix"><b>Drop a GIF or image</b><span>or</span><label class="btn file">Choose file<input type="file" accept="image/*" data-file="matrix"></label></div>
+            <div class="field-head" style="margin:16px 0 10px"><span>Fit</span></div>
+            <div class="seg" id="mxFit"></div>
+          </div>
+
+          <div class="mx-body hidden" data-tab="styles">
+            <div class="lbl">Halcyon styles</div>
+            <div class="styles" id="stylesOurs"></div>
+            <div id="stylesLibWrap" class="hidden">
+              <div class="lbl">From your keyboard</div>
+              <div class="styles" id="stylesLib"></div>
+            </div>
+          </div>
+
+          <div class="mx-body hidden" data-tab="draw">
+            <canvas class="pixgrid" id="pixGrid" role="img" aria-label="Paint LEDs"></canvas>
+            <div class="paint-tools">
+              <div class="swatches" id="pixSwatches"></div>
+              <label class="check"><input type="checkbox" id="pixErase"> Eraser</label>
+              <button class="btn" id="pixFill">Fill</button><button class="btn" id="pixClear">Clear</button>
+            </div>
+            <div class="frames" id="pixFrames"></div>
+            <div class="paint-tools">
+              <button class="btn" id="pixAdd">New frame</button><button class="btn" id="pixDup">Duplicate</button><button class="btn" id="pixDel">Delete</button>
+            </div>
+          </div>
+
+          <div class="mx-body hidden" data-tab="text">
+            <label class="lbl" for="txtInput">Message</label>
+            <input class="input" id="txtInput" maxlength="60" value="HALCYON" autocomplete="off">
+            <div class="field-head" style="margin:16px 0 10px"><span>Colour</span></div>
+            <div class="swatches" id="txtSwatches"></div>
+            <div class="field-head" style="margin:16px 0 10px"><span>Style</span></div>
+            <div class="seg" id="txtStyle"></div>
+          </div>
+
+          <div class="mx-opts">
+            <div><div class="field-head" style="margin-bottom:10px"><label for="mxSpeed">Speed</label><output id="mxSpeedOut"></output></div>
+              <input type="range" class="slider" id="mxSpeed" min="1" max="100" step="1" value="10"></div>
+            <div><div class="field-head" style="margin-bottom:10px"><span>Brightness</span></div><div class="seg" id="mxBright"></div></div>
+          </div>
+          <div class="actions">
+            <span style="flex:1"></span><span class="stamp" data-stamp="matrix"></span>
+            <button class="btn primary" data-send="matrix" disabled>Send to keyboard</button>
+          </div>
+          <div class="meter hidden" data-progress="matrix"><i></i></div>
+        </section>
+
+        <section class="card" id="lcdCard">
+          <div class="card-head"><h2>Screen</h2><p id="lcdSize"></p></div>
+          <div class="drop" data-drop="lcd"><b>Drop a GIF or image</b><span>or</span><label class="btn file">Choose file<input type="file" accept="image/*" data-file="lcd"></label></div>
+          <div class="actions hidden" id="lcdMore" style="margin-top:10px">
+            <label class="btn file">Add another to the playlist<input type="file" accept="image/*" id="lcdAdd"></label>
+            <span class="hint" id="lcdParts" style="margin:0"></span>
+          </div>
+          <div class="field-head" style="margin:16px 0 10px"><span>Fit</span></div>
+          <div class="seg" id="lcdFit"></div>
+          <div class="switch-row" id="lcdBothRow" style="margin-top:16px">
+            <div><div style="font-weight:500">Also put it on the LED matrix</div><p class="hint">One file, both displays, sent together. Uses the matrix speed and brightness.</p></div>
+            <label class="toggle"><input type="checkbox" id="lcdBoth" aria-label="Also put it on the LED matrix"><span></span></label>
+          </div>
+          <div class="actions">
+            <button class="btn" id="lcdRestore">Restore original screen</button>
+            <span style="flex:1"></span><span class="stamp" data-stamp="lcd"></span>
+            <button class="btn primary" data-send="lcd" disabled>Send to keyboard</button>
+          </div>
+          <div class="meter hidden" data-progress="lcd"><i></i></div>
+        </section>
+      </div>
+      <section class="card bootcard" id="bootCard">
+        <div>
+          <h2>Boot animation</h2>
+          <p class="hint">Plays on the LED matrix each time the keyboard turns on. Now: <span id="bootLabel">unknown</span>.</p>
+        </div>
+        <div class="boot-screen"><canvas id="bootCanvas" role="img" aria-label="Boot animation preview"></canvas></div>
+        <div class="foot-actions">
+          <span class="stamp" data-stamp="boot"></span>
+          <button class="btn" id="bootRestore">Restore original</button>
+          <button class="btn primary" id="bootSet" disabled>Use current matrix design</button>
+        </div>
+        <div class="meter hidden" data-progress="boot"><i></i></div>
+      </section>
+    </main>
+
+    <!-- Settings -->
+    <main class="canvas hidden" data-page="settings">
+      <section class="card settings">
+        <div class="set-row">
+          <div><h2>Game mode</h2><p class="hint">Blocks keys that knock you out of a game.</p></div>
+          <div class="set-panel">
+            <div class="switch-row"><span>Game mode</span><label class="toggle"><input type="checkbox" data-set="game_mode" aria-label="Game mode"><span></span></label></div>
+            <div class="switch-row sub"><span>Lock the Windows key</span><label class="toggle"><input type="checkbox" data-set="disable_win" aria-label="Lock Windows key"><span></span></label></div>
+            <div class="switch-row sub"><span>Block Alt + Tab</span><label class="toggle"><input type="checkbox" data-set="disable_alt_tab" aria-label="Block Alt+Tab"><span></span></label></div>
+            <div class="switch-row sub"><span>Block Alt + F4</span><label class="toggle"><input type="checkbox" data-set="disable_alt_f4" aria-label="Block Alt+F4"><span></span></label></div>
+          </div>
+        </div>
+        <div class="set-row">
+          <div><h2>Fn key</h2><p class="hint">Swap the Fn layer, so the top row gives its Fn functions without holding Fn.</p></div>
+          <div class="set-panel">
+            <div class="switch-row"><span>Swap Fn layer</span><label class="toggle"><input type="checkbox" data-set="fn_switch" aria-label="Swap Fn layer"><span></span></label></div>
+          </div>
+        </div>
+        <div class="set-row">
+          <div><h2>Backlight sleep</h2><p class="hint">Turn the lights off after the keyboard has been idle.</p></div>
+          <div class="set-panel"><div class="seg" id="sleepSeg"></div></div>
+        </div>
+        <div class="set-foot"><span class="stamp" id="setStamp"></span></div>
+      </section>
+    </main>
+
+    <!-- Keyboards -->
+    <main class="canvas hidden" data-page="devices">
+      <div class="boards" id="devGrid"></div>
+      <div id="problems"></div>
+      <section class="card addkb">
+        <div>
+          <h2>Add a keyboard</h2>
+          <p class="hint">Keyboards are small definition files, so you can add yours without touching any code.</p>
+          <p class="hint warn-text">Adding and testing keyboards is at your own risk: a wrong definition could send commands
+            that misconfigure or brick a keyboard, and you are solely responsible for that. See DISCLAIMER.md.</p>
+          <details class="howto">
+            <summary>How it works</summary>
+            <ol class="steps">
+              <li>Copy a definition from <code>halcyon/devices/</code>, then change its name and USB IDs.</li>
+              <li>Boards that ship the HFD vendor driver can import their layout: <code>python tools/import_hfd_layout.py KeyboardLayout.xml</code></li>
+              <li>Save it in your keyboards folder and press Reload. Share it upstream so everyone gets it.</li>
+            </ol>
+            <p class="hint" id="folderPath"></p>
+          </details>
+        </div>
+        <div class="foot-actions">
+          <button class="btn" id="reload">Reload</button>
+          <button class="btn primary" id="openFolder">Open keyboards folder</button>
+        </div>
+      </section>
+    </main>
+  </div>
+</div>
+<div class="toast" id="toast" role="status"></div>
+<div class="gate hidden" id="gate">
+  <div class="gate-box" role="dialog" aria-modal="true" aria-labelledby="gateTitle">
+    <h2 id="gateTitle">Before you start</h2>
+    <p>Halcyon is independent, community-made software. It is not made or supported by any keyboard maker, and it
+      controls keyboards with reverse-engineered protocols that have been tested on only a few keyboards.</p>
+    <p>Sending commands can change your keyboard's settings, keys, macros and animations. In rare cases it could leave
+      a keyboard misbehaving or unusable (bricked), or void its warranty.</p>
+    <p><b>You use Halcyon, and add or test keyboards with it, entirely at your own risk.</b> You are solely responsible
+      for any damage to your keyboard or other devices. The authors and contributors accept no responsibility or
+      liability for it.</p>
+    <label class="check gate-check"><input type="checkbox" id="gateCheck"> I understand and accept these risks</label>
+    <div class="actions">
+      <span class="hint" style="margin:0;flex:1">Want to look around first? Start Halcyon with <code>--demo</code>: nothing is sent to any device.</span>
+      <button class="btn primary" id="gateOk" disabled>Continue</button>
+    </div>
+  </div>
+</div>
+
+<script src="app.js"></script>
+<script src="device.js"></script>
+<script src="styles.js"></script>
+<script src="views.js"></script>
+<script src="display.js"></script>
+<script src="palette.js"></script>
+</body>
+</html>
