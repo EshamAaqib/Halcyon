@@ -336,7 +336,6 @@ impl Transport for Dongle {
             match self.transact(&[0x02, 0, 0], Duration::from_millis(400))? {
                 Some(r) if r.len() >= 13 => json!({
                     "linked": r[12] == 1,
-                    "battery": r[11],                              // inferred from observation
                     "firmware": format!("{:02X}{:02X}", r[4], r[3]), // inferred
                 }),
                 _ => json!({"linked": false}),

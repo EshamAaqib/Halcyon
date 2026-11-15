@@ -151,8 +151,8 @@ dongle p:   0C 10 00 00 [4]=sel+1 [5]=5A [6]=yy [7]=mm [8]=dd [9]=hh [10]=mi [11
 - Dongle probe at enumeration (0x468940, called at 0x468fd7) [code]: send `p = 02 00 00`.
   - Success only requires reply p[0]==2, p[1]==0 and p[2]==0. The result is stored as the "online" flag (+0x228).
   - **The app never parses the rest of this reply**, so this binary cannot confirm what the bytes `40 30 00 00 45 0c 0a 80 33 01 ...` mean.
-  - Guesses from the values alone [inf]: 0x3040 = firmware version, `45 0c` = VID 0x0C45 (the wired Sonix VID), `0a 80` = PID 0x800A, 0x33 = 51 % battery, 01 = linked.
-  - No battery parser was found.
+  - Guesses from the values alone [inf]: 0x3040 = firmware version, `45 0c` = VID 0x0C45 (the wired Sonix VID), `0a 80` = PID 0x800A, 0x33 unknown (constant: also 0x33 at 100 % charge, so not the battery), 01 = linked.
+  - No battery parser was found, and no byte of this reply follows the charge (checked on hardware at 100 %).
 - Unsolicited input reports (0x448040) [code]:
   - Wired `04 73 xx`: sets flag this+0x52F48 when xx!=0.
   - Wired `04 40 nn`: the host runs custom key action nn (open program / web / text, 0x41bc40).

@@ -43,7 +43,9 @@ Every packet is answered with `04 <cmd> 00 01`: byte 3 is 01 for OK, FF for busy
 
 One 32-byte frame per packet: `<cmd bytes> <data> <checksum>`, where the checksum is the 8-bit sum of the
 report ID and the 31 bytes before it. The keyboard echoes the first three bytes. `02 00 00` asks for status
-(byte 11 of the reply reads as battery percent, byte 12 as linked; inferred from observation).
+(byte 12 of the reply is 01 when the keyboard is linked; inferred from observation). The rest of the reply is
+fixed device information, not a battery level: it reads `40 30 00 00 45 0c 0a 80 33 01` whatever the charge.
+No battery query is known.
 
 ## Commands
 

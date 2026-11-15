@@ -289,7 +289,7 @@ impl Transport for Demo {
         None
     }
     fn status(&mut self) -> Result<Value> {
-        Ok(json!({"linked": true, "battery": 80}))
+        Ok(json!({"linked": true}))
     }
     fn set_lighting(&mut self, _: &LightingState) -> Result<bool> {
         Ok(true)
