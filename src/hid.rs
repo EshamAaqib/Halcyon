@@ -14,6 +14,33 @@ pub struct Interface {
     pub product: Option<String>,
 }
 
+/// Create the hidapi instance on a thread that lives for the rest of the process.
+///
+/// On macOS, hidapi schedules its IOHIDManager on the run loop of the thread that calls
+/// `hid_init`. Every HTTP request runs on its own short-lived thread, so creating the API there
+/// left the manager pointing at a freed run loop once that thread exited; the next enumeration
+/// then crashed inside `IOHIDManagerSetDeviceMatchingMultiple` (pointer-authentication trap in
+/// `CFRunLoopAddSource`). A parked, never-exiting thread keeps that run loop valid.
+fn create_api() -> Result<HidApi> {
+    let (tx, rx) = std::sync::mpsc::channel();
+    std::thread::Builder::new()
+        .name("hid-runloop".into())
+        .spawn(move || {
+            let created = HidApi::new();
+            let ok = created.is_ok();
+            let _ = tx.send(created);
+            if ok {
+                loop {
+                    std::thread::park();
+                }
+            }
+        })
+        .map_err(|e| Error::Internal(format!("could not start the USB thread ({e})")))?;
+    rx.recv()
+        .map_err(|_| Error::Internal("the USB thread stopped unexpectedly".into()))?
+        .map_err(|e| Error::Device(format!("USB access is not available ({e})")))
+}
+
 #[derive(Default)]
 pub struct Hid {
     api: Mutex<Option<HidApi>>,
@@ -23,10 +50,7 @@ impl Hid {
     fn with<T>(&self, f: impl FnOnce(&mut HidApi) -> Result<T>) -> Result<T> {
         let mut guard = self.api.lock().unwrap_or_else(|e| e.into_inner());
         if guard.is_none() {
-            *guard = Some(
-                HidApi::new()
-                    .map_err(|e| Error::Device(format!("USB access is not available ({e})")))?,
-            );
+            *guard = Some(create_api()?);
         }
         f(guard.as_mut().expect("initialised above"))
     }
